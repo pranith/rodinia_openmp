@@ -1,4 +1,4 @@
-Rodinia Benchmark Suite 3.1
+Rodinia Benchmark Suite 3.1 (Only the OpenMP benchmarks)
 ===========================
 
 I. Overview
