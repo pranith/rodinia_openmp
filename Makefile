@@ -24,6 +24,7 @@ endif
 all: OMP
 
 OMP:
+	@mkdir -p $(OMP_BIN_DIR)
 	cd openmp/backprop;				CC=$(CC) CXX=$(CXX) STATIC=$(STATIC) make;	cp backprop $(OMP_BIN_DIR)
 	cd openmp/bfs; 					CC=$(CC) CXX=$(CXX) STATIC=$(STATIC) make;	cp bfs $(OMP_BIN_DIR)
 	cd openmp/cfd; 					CC=$(CC) CXX=$(CXX) STATIC=$(STATIC) make;	cp euler3d_cpu euler3d_cpu_double pre_euler3d_cpu pre_euler3d_cpu_double $(OMP_BIN_DIR)
@@ -45,5 +46,5 @@ OMP:
 clean: OMP_clean
 
 OMP_clean:
-	cd $(OMP_BIN_DIR); rm -f *
+	cd $(OMP_BIN_DIR) && rm -f *
 	for dir in $(OMP_DIRS) ; do cd openmp/$$dir ; make clean ; cd ../.. ; done
