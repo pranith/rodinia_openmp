@@ -10,7 +10,7 @@
 srcdir = .
 VPATH = .
 
-CC = cc
+CC ?= cc
 
 DEFS = -DHAVE_CONFIG_H
 LIBS =  -lm 
@@ -21,6 +21,9 @@ RANLIB = ranlib
 # CFLAGS = -pg -g
 CFLAGS = -O
 
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
 
 .c.o:
 	$(CC) -c $(CFLAGS) $(DEFS) $<
@@ -124,7 +127,7 @@ msdos-zip:
 	 `echo $(ALL_LISTS) | sed -e 's/\.o/.c/g'` \
 	$(HLIST)  $(OTHERS) `echo $(TORTURE) | sed -e 's/\.o/.c/g'` \
 	MACHINES DOC
-	
+
 
 fullshar:
 	- /bin/rm -f $(MES_PAK).shar;

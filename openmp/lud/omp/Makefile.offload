@@ -15,8 +15,8 @@ EXECUTABLE      := lud_omp_offload
 SOURCES         := lud.c lud_omp.c ../common/common.c 
 
 # ------------  compiler  ------------------------------------------------------
-CC              := gcc
-CXX             := g++
+CC              ?= gcc
+CXX             ?= g++
 
 # ------------  compiler flags  ------------------------------------------------  -qopt-gather-scatter-unroll=7
 DEBUG_CFLAGS    := -Wall -O0 -g
@@ -51,6 +51,11 @@ ifeq (YES, ${PROFILE})
   CFLAGS       := ${CFLAGS}   -pg -O3
   CXXFLAGS     := ${CXXFLAGS} -pg -O3
   LDFLAGS      := ${LDFLAGS}  -pg
+endif
+
+ifeq ($(STATIC), 1)
+  CFLAGS += --static
+  CXXFLAGS += --static
 endif
 
 # ------------  additional system include directories  -------------------------

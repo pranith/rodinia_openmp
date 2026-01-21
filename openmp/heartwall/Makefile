@@ -3,16 +3,22 @@ ifdef OUTPUT
 override OUTPUT = -DOUTPUT
 endif
 
+CFLAGS = -lm -O3 -fopenmp
+
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
+
 # link objects(binaries) together
 heartwall: main.o ./AVI/avilib.o ./AVI/avimod.o
-	gcc main.o ./AVI/avilib.o ./AVI/avimod.o -lm -fopenmp -o heartwall
+	$(CC) main.o ./AVI/avilib.o ./AVI/avimod.o $(CFLAGS) -o heartwall
 
 # compile main function file into object (binary)
 main.o: main.c define.c kernel.c
-	gcc $(OUTPUT) main.c -I./AVI -c -O3 -fopenmp
+	$(CC) $(OUTPUT) main.c -I./AVI -c $(CFLAGS)
 
 ./AVI/avilib.o ./AVI/avimod.o:
-	cd AVI; make;
+	cd AVI; CC=$(CC) STATIC=$(STATIC) make;
 
 # delete all object files
 clean:

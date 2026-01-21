@@ -6,18 +6,24 @@
           # .
           # .
 	# command n
+CC ?= gcc
+CFLAGS = -lm -fopenmp -O3
+
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
 
 # link objects(binaries) together
 a.out:	main.o
-	gcc	main.o \
-			-lm -fopenmp -o srad
+	$(CC)	main.o \
+			$(CFLAGS) -o srad
 
 # compile main function file into object (binary)
 main.o: 	main.c \
 				define.c \
 				graphics.c
-	gcc	main.c \
-			-c -O3 -fopenmp
+	$(CC)	-c main.c \
+			$(CFLAGS)
 
 # delete all object files
 clean:

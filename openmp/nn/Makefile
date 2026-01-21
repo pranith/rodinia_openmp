@@ -1,7 +1,9 @@
-LOCAL_CC = gcc -g -O3 -Wall
-CC = gcc
-CFLAGS = -lm -fopenmp -Wall
+CC ?= gcc
+CFLAGS = -O3 -lm -fopenmp -Wall
 
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
 
 all : nn
 
@@ -12,5 +14,5 @@ nn : nn_openmp.c
 	$(CC) -o $@ $< $(LDFLAGS) $(CFLAGS) 
 
 hurricane_gen : hurricane_gen.c
-	$(LOCAL_CC) -o $@ $< -lm
+	$(CC) $(CFLAGS) -o $@ $< -lm
 

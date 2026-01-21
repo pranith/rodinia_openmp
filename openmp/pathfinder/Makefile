@@ -1,13 +1,17 @@
-CC = g++
+CXX ?= g++
 SRC = pathfinder.cpp
 EXE = pathfinder
-FLAGS = -fopenmp
+CFLAGS = -fopenmp
+
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
 
 release:
-	$(CC) $(SRC) $(FLAGS) -o $(EXE)
+	$(CXX) $(SRC) $(CFLAGS) -o $(EXE)
 
 debug:
-	$(CC) $(SRC) -g -Wall -o $(EXE)
+	$(CXX) $(SRC) -g -Wall -o $(EXE)
 
 clean:
 	rm -f pathfinder

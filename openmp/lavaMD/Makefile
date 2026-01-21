@@ -10,16 +10,21 @@ ifdef OUTPUT
 override OUTPUT = -DOUTPUT
 endif
 
-C_C = gcc
+CC ?= gcc
 OMP_LIB = -lgomp
 OMP_FLAG = -fopenmp
+CFLAGS = -O3
+
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
 
 # link objects (binaries) together
 a.out:		main.o \
 			./kernel/kernel_cpu.o \
 			./util/num/num.o \
 			./util/timer/timer.o
-	$(C_C)	main.o \
+	$(CC)	main.o \
 			./kernel/kernel_cpu.o \
 			./util/num/num.o \
 			./util/timer/timer.o \
@@ -35,32 +40,32 @@ main.o:		main.h \
 			./util/num/num.c \
 			./util/timer/timer.h \
 			./util/timer/timer.c
-	$(C_C)	${OUTPUT} main.c \
+	$(CC)	${OUTPUT} main.c \
 			-c \
 			-o main.o \
-			-O3
+			$(CFLAGS)	
 
 ./kernel/kernel_cpu.o:	./kernel/kernel_cpu.h \
 						./kernel/kernel_cpu.c
-	$(C_C)				./kernel/kernel_cpu.c \
+	$(CC)				./kernel/kernel_cpu.c \
 						-c \
 						-o ./kernel/kernel_cpu.o \
-						-O3 \
+						$(CFLAGS) \
 						$(OMP_FLAG)
 
 ./util/num/num.o:	./util/num/num.h \
 					./util/num/num.c
-	$(C_C)			./util/num/num.c \
+	$(CC)			./util/num/num.c \
 					-c \
 					-o ./util/num/num.o \
-					-O3
+					$(CFLAGS)
 
 ./util/timer/timer.o:	./util/timer/timer.h \
 						./util/timer/timer.c
-	$(C_C)				./util/timer/timer.c \
+	$(CC)				./util/timer/timer.c \
 						-c \
 						-o ./util/timer/timer.o \
-						-O3
+						$(CFLAGS)	
 
 # delete all object and executable files
 clean:

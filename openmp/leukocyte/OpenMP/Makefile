@@ -4,8 +4,12 @@ endif
 
 
 # C compiler
-CC = gcc
+CC ?= gcc
 CC_FLAGS = -g -O3 -Wall -fopenmp -I$(MATRIX_DIR) -Wno-format-overflow
+
+ifeq ($(STATIC), 1)
+	CC_FLAGS += --static
+endif
 
 # Matrix library path
 MATRIX_DIR = ../meschach_lib
@@ -22,7 +26,7 @@ find_ellipse.o: avilib.h
 track_ellipse.o: find_ellipse.h track_ellipse.h avilib.h
 
 $(MATRIX_DIR)/meschach.a:
-	cd $(MATRIX_DIR); ./configure --with-all; make all; make clean
+	cd $(MATRIX_DIR); ./configure --with-all; CC=$(CC) STATIC=$(STATIC) make all; make clean
 
 clean:
 	rm -f *.o leukocyte

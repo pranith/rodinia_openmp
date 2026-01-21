@@ -1,12 +1,14 @@
 #makefile
+CFLAGS = -O3 -ffast-math -fopenmp
+LDFLAGS = -lm
+
+ifeq ($(STATIC), 1)
+	CFLAGS += --static
+endif
+
 
 openmp: ex_particle_OPENMP_seq.c
-	gcc -O3 -ffast-math -fopenmp ex_particle_OPENMP_seq.c -o particle_filter -lm 
-
-
-icc_openmp: ex_particle_OPENMP_seq.c
-	icc -O3 -fast -openmp ex_particle_OPENMP_seq.c -o particle_filter
-
+	$(CC) $(CFLAGS) ex_particle_OPENMP_seq.c -o particle_filter $(LDFLAGS)
 
 clean:
 	rm particle_filter

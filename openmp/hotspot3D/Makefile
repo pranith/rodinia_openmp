@@ -1,4 +1,4 @@
-CC = gcc
+CC ?= gcc
 CCFLAGS = -g -fopenmp -O3
 OUTPUT = *.out
 

@@ -1,6 +1,10 @@
 # C compiler
-CC = gcc
+CC ?= gcc
 CC_FLAGS = -g -fopenmp  -O2
+
+ifeq ($(STATIC), 1)
+	CC_FLAGS += --static
+endif
 
 
 backprop: backprop.o facetrain.o imagenet.o backprop_kernel.o 
@@ -11,7 +15,7 @@ backprop: backprop.o facetrain.o imagenet.o backprop_kernel.o
 
 facetrain.o: facetrain.c backprop.h
 	$(CC) $(CC_FLAGS) facetrain.c -c
-	
+
 backprop.o: backprop.c backprop.h
 	$(CC) $(CC_FLAGS) backprop.c -c
 
@@ -20,7 +24,6 @@ backprop_kernel.o: backprop_kernel.c backprop.h
 
 imagenet.o: imagenet.c backprop.h
 	$(CC) $(CC_FLAGS) imagenet.c -c
-
 
 clean:
 	rm -f *.o *~ backprop backprop_cuda.linkinfo

@@ -10,15 +10,21 @@ ifdef version
   endif
 endif
 
+STATIC_FLAGS = 
+
+ifeq ($(STATIC), 1)
+	CXXFLAGS += --static
+	STATIC_FLAGS += --static
+endif
+
 all: cpu omp
 
 cpu:
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) streamcluster_original.cpp -o $(TARGET_C) $(LIBS) -DENABLE_THREADS -pthread
 
 omp:
-	g++ -O3 -fopenmp -o $(TARGET_O) streamcluster_omp.cpp
+	$(CXX) $(STATIC_FLAGS) -O3 -fopenmp -o $(TARGET_O) streamcluster_omp.cpp
 
 
 clean:
 	rm -f *.o *~ *.txt sc_cpu sc_omp
-	

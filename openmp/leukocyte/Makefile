@@ -1,7 +1,7 @@
 all: OpenMP/leukocyte
 
 OpenMP/leukocyte:
-	cd OpenMP; make
+	cd OpenMP; CC=$(CC) STATIC=$(STATIC) make
 
 clean:
 	cd OpenMP; make clean

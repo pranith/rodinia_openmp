@@ -1,10 +1,13 @@
 # C compiler
-CXX = g++
+CXX ?= g++
 CC_FLAGS = -g -fopenmp -O2 -Wno-write-strings
 OFFLOAD_CC_FLAGS = -offload-option,mic,compiler,"-no-opt-prefetch"
 
-all: hotspot hotspot_offload 
+ifeq ($(STATIC), 1)
+	CC_FLAGS += --static
+endif
 
+all: hotspot hotspot_offload 
 
 hotspot: hotspot_openmp.cpp Makefile 
 	$(CXX) $(CC_FLAGS) hotspot_openmp.cpp -o hotspot 

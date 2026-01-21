@@ -34,6 +34,7 @@ double	x;
     return y;	/* prevents optimisation */
 }
 
+int
 main()
 {
     static float	feps, feps1, ftmp;

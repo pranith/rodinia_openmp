@@ -8,8 +8,8 @@
 void run(int argc, char** argv);
 
 /* define timer macros */
-#define pin_stats_reset()   startCycle()
-#define pin_stats_pause(cycles)   stopCycle(cycles)
+#define pin_stats_reset()   startTime()
+#define pin_stats_pause(cycles)   stopTime(cycles)
 #define pin_stats_dump(cycles)    printf("timer: %Lu\n", cycles)
 
 #define BENCH_PRINT

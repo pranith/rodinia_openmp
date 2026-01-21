@@ -22,8 +22,9 @@
 **      distribution fee considered a charge.
 **
 ***************************************************************************/
+#include <stdio.h>
 
-
+int
 main()
 {
     int		i, old_i;

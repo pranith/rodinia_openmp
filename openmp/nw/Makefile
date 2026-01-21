@@ -1,7 +1,11 @@
 # C compiler
-CXX = g++
+CXX ?= g++
 CC_FLAGS = -g -O3 -fopenmp
 OFFLOAD_CC_FLAGS = -offload-option,mic,compiler,"-no-opt-prefetch"
+
+ifeq ($(STATIC), 1)
+	CC_FLAGS += --static
+endif
 
 .phony: all
 

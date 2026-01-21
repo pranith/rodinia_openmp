@@ -1,6 +1,10 @@
 # C compiler
-CC = gcc
+CC ?= gcc
 CC_FLAGS = -g -fopenmp -O2 
+
+ifeq ($(STATIC), 1)
+	CC_FLAGS += --static
+endif
 
 kmeans: cluster.o getopt.o kmeans.o kmeans_clustering.o 
 	$(CC) $(CC_FLAGS) cluster.o getopt.o kmeans.o kmeans_clustering.o  -o kmeans
@@ -10,10 +14,10 @@ kmeans: cluster.o getopt.o kmeans.o kmeans_clustering.o
 
 cluster.o: cluster.c 
 	$(CC) $(CC_FLAGS) cluster.c -c
-	
+
 getopt.o: getopt.c 
 	$(CC) $(CC_FLAGS) getopt.c -c
-	
+
 kmeans.o: kmeans.c 
 	$(CC) $(CC_FLAGS) kmeans.c -c
 
